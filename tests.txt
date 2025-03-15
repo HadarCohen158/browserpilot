@@ -1,0 +1,12 @@
+
+Test1:
+Go to Google.com
+Find all textareas.
+Find the first visible textarea.
+
+Test2:
+Type in "Hello World" and press enter.
+Wait 2 seconds.
+
+Test3:
+Wait 1 second

@@ -262,6 +262,11 @@ class GPTSeleniumAgent:
         info_str = info_str + f"\nAction: {action}\n"
         logger.info(info_str)
 
+        # Write to instructions_log.txt
+        with open("logs/instructions.txt", "a") as instructions_file:
+            instructions_file.write(f"Instruction: {instruction}\n")
+            instructions_file.write(f"Action: {action}\n")
+
     def __get_relevant_part_of_stack_trace(self):
         """Get the relevant part of the stack trace."""
         original_stack_trace = traceback.format_exc()
@@ -341,7 +346,7 @@ class GPTSeleniumAgent:
             self.__print_instruction_and_action(instruction, action)
             return action
         else:
-            raise Exception("Failed to execute instruction.")
+            raise Exception(problem_instruction)
 
     def __step_through_instructions(self):
         """In contrast to `__run_compiled_instructions`, this function will
