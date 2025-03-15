@@ -264,7 +264,6 @@ class GPTSeleniumAgent:
 
         # Write to instructions_log.txt
         with open("logs/instructions.txt", "a") as instructions_file:
-            instructions_file.write(f"Instruction: {instruction}\n")
             instructions_file.write(f"Action: {action}\n")
 
     def __get_relevant_part_of_stack_trace(self):

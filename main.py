@@ -18,8 +18,8 @@ with open("tests.txt", "r") as file:
 test_results = {}
 with open("tests.txt", "r") as file:
     for line in file:
-        if line.startswith("Test"):
-            test_number = line.strip().split(":")[0]
+        if line.startswith('print("Test'):
+            test_number = line.strip().split('("')[1].split('")')[0]
             test_results[test_number] = "OK"
 
 agent = GPTSeleniumAgent(instructions, "/Users/eli.shemesh/PycharmProjects/llms/chromedriver")
@@ -51,8 +51,8 @@ if os.path.exists("logs/error.txt"):
             if failed_line in line:
                 # Search backwards for the test number
                 for j in range(i, -1, -1):
-                    if instructions_lines[j].startswith("Test"):
-                        test_number = instructions_lines[j].strip().split(":")[0]
+                    if instructions_lines[j].startswith('print("Test'):
+                        test_number = instructions_lines[j].strip().split('("')[1].split('")')[0]
                         test_results[test_number] = "FAILED"
                         break
                 break
