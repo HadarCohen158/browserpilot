@@ -1,12 +1,16 @@
 from dotenv import load_dotenv
 load_dotenv()
 from browserpilot.agents.test_runner import TestRunner
-
+from pathlib import Path
 
 def main():
 
+    current_dir = Path(__file__).resolve().parent
+
+    chromedriver_relative_path = current_dir / 'chromedriver'
+
     # Initialize test runner
-    test_runner = TestRunner(instructions_file="tests.txt", chromedriver_path="/Users/eli.shemesh/PycharmProjects/browserpilot/chromedriver")
+    test_runner = TestRunner(instructions_file="tests.txt", chromedriver_path=str(chromedriver_relative_path))
 
     # Clear previous logs
     test_runner.clear_logs_directory()
