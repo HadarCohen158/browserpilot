@@ -10,7 +10,7 @@ def main():
     chromedriver_relative_path = current_dir / 'chromedriver'
 
     # Initialize test runner
-    test_runner = TestRunner(instructions_file="tests.txt", chromedriver_path=str(chromedriver_relative_path))
+    test_runner = TestRunner(instructions_file="automation/tests.txt", chromedriver_path=str(chromedriver_relative_path))
 
     # Clear previous logs
     test_runner.clear_logs_directory()
