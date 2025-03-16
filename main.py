@@ -1,63 +1,35 @@
-import shutil
+from browserpilot.agents.test_runner import TestRunner
 from dotenv import load_dotenv
-import os
 
-load_dotenv()
-from browserpilot.agents.gpt_selenium_agent import GPTSeleniumAgent
 
-# Check if the logs directory exists and delete it if it does
-if os.path.exists("logs"):
-    shutil.rmtree("logs")
-os.makedirs("logs", exist_ok=True)
+def main():
 
-# Read instructions from the text file
-with open("tests.txt", "r") as file:
-    instructions = file.read()
+    load_dotenv()
 
-# Initialize test results dictionary
-test_results = {}
-with open("tests.txt", "r") as file:
-    for line in file:
-        if line.startswith('print("Test'):
-            test_number = line.strip().split('("')[1].split('")')[0]
-            test_results[test_number] = "OK"
+    # Initialize test runner
+    test_runner = TestRunner(instructions_file="tests.txt", chromedriver_path="/path/to/chromedriver")
 
-agent = GPTSeleniumAgent(instructions, "/Users/eli.shemesh/PycharmProjects/llms/chromedriver")
+    # Clear previous logs
+    test_runner.clear_logs_directory()
 
-try:
-    agent.run()
-except Exception as e:
-    with open("logs/error.txt", "a") as error_file:
-        error_file.write(f"Problem Instruction: {e}\n")
+    # Read the instructions
+    instructions = test_runner.read_instructions()
 
-# Check if error.txt exists
-if os.path.exists("logs/error.txt"):
-    with open("logs/error.txt", "r") as error_file:
-        error_lines = error_file.readlines()
+    # Initialize the test results as "OK"
+    test_runner.initialize_test_results()
 
-    # Extract the line after "Failed on line:"
-    failed_line = None
-    for line in error_lines:
-        if "Failed on line:" in line:
-            failed_line = line.split("Failed on line:")[1].strip()
-            break
+    # Run the agent
+    test_runner.run_agent(instructions)
 
-    if failed_line:
-        with open("logs/instructions.txt", "r") as instructions_file:
-            instructions_lines = instructions_file.readlines()
+    # Parse results from instructions
+    test_runner.parse_test_results_from_instructions()
 
-        # Find the test number above the failed line
-        for i, line in enumerate(instructions_lines):
-            if failed_line in line:
-                # Search backwards for the test number
-                for j in range(i, -1, -1):
-                    if instructions_lines[j].startswith('print("Test'):
-                        test_number = instructions_lines[j].strip().split('("')[1].split('")')[0]
-                        test_results[test_number] = "FAILED"
-                        break
-                break
+    # Check for failed tests
+    test_runner.check_for_failed_tests()
 
-# Write test results to test_results.txt
-with open("logs/test_results.txt", "w") as results_file:
-    for test, result in test_results.items():
-        results_file.write(f"{test}: {result}\n")
+    # Write final test results
+    test_runner.write_test_results()
+
+
+if __name__ == "__main__":
+    main()

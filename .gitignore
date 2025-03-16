@@ -2,6 +2,7 @@
 chromedriver
 user_data/
 private/
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
