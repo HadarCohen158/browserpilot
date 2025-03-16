@@ -1,7 +1,8 @@
 import shutil
 import os
-from browserpilot.agents.gpt_selenium_agent import GPTSeleniumAgent
 from dotenv import load_dotenv
+load_dotenv()
+from browserpilot.agents.gpt_selenium_agent import GPTSeleniumAgent
 
 class TestRunner:
     def __init__(self, instructions_file, chromedriver_path):
