@@ -37,7 +37,12 @@ class TestRunner:
 
     def run_agent(self, instructions):
         """Run the Selenium agent with the provided instructions."""
-        agent = GPTSeleniumAgent(instructions, self.chromedriver_path)
+
+        chrome_options_dict = {
+            "--remote-debugging-pipe": None,
+        }
+
+        agent = GPTSeleniumAgent(instructions, self.chromedriver_path, chrome_options=chrome_options_dict)
         try:
             agent.run()
         except Exception as e:

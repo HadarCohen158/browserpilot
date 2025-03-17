@@ -7,7 +7,7 @@ def main():
 
     current_dir = Path(__file__).resolve().parent
 
-    chromedriver_relative_path = current_dir / 'chromedriver'
+    chromedriver_relative_path = current_dir / 'chromedriver.exe'
 
     # Initialize test runner
     test_runner = TestRunner(instructions_file="automation/tests.txt", chromedriver_path=str(chromedriver_relative_path))
